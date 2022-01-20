@@ -1,0 +1,5 @@
+package com.developers.model.entity;
+
+public class UsersRole {
+
+}

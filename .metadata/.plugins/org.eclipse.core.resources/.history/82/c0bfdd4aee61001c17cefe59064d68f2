@@ -1,0 +1,22 @@
+package com.developers.model.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name = "roles_usuarios")
+public class UsersRole {
+
+	/* Relacion entre la tabla usuarios y roles_usuarios ⬇ */
+
+    @ManyToOne
+    @MapsId("idUser")
+    @JoinColumn(name = "id", insertable = false, updatable = false)
+    private User user;
+}

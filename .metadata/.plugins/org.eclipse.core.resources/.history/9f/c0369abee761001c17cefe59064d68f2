@@ -1,0 +1,8 @@
+package com.developers.model.entity;
+
+@Data
+public class Crime {
+	
+	
+
+}
