@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.developers.model.Role;
 
 @Repository
-public interface CrimeRepository extends CrudRepository<Role, Integer> {
+public interface CrimeRepository extends CrudRepository<Role, Long> {
 
 }

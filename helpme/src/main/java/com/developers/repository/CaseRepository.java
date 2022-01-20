@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.developers.model.Case;
 
 @Repository
-public interface CaseRepository extends CrudRepository<Case, Integer> {
+public interface CaseRepository extends CrudRepository<Case, Long> {
 
 }

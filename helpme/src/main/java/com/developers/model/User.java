@@ -14,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
 
 import lombok.Data;
 
@@ -30,22 +33,26 @@ public class User {
 	@Column(name = "enabled", unique = true, length = 120)
 	private Boolean enabledUser;
 	
+	@Column(length = 120)
 	private String password;
 	
-	@Column(name = "username")
+	@NotEmpty(message = "Nombre es obligatorio")
+	@Column(unique = true, name = "username")
 	private String userName;
 	
-	@Column(name = "nombre")
+	@NotEmpty(message = "Usuario es obligatorio")
+	@Column(nullable = false, name = "nombre")
 	private String firstName;
 	
-	@Column(name = "apellido")
+	@Length(min = 1, max = 120, message = "Apellido es requerido")
+	@Column(nullable = true, name = "apellido")
 	private String lastName;
 	
 	@Column(name = "fecha_nacimiento")
 	private LocalDate dateBirth;
 	
 	@Column(name = "red_social")
-	private int socialNetwork;
+	private Boolean socialNetwork;
 	
 	@Column(name = "image")
 	private Blob imageUser;

@@ -33,7 +33,7 @@ public class Case {
 	
 	private Float altitud;
 	
-	private int visible;
+	private Boolean visible;
 	
 	@Column(name = "descripcion")
 	private String descriptionCase;

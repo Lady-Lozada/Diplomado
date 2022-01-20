@@ -18,12 +18,12 @@ public class CaseServiceImpls implements CaseService {
 	
 	@Override
 	public void createCase(Case caso) {
-		boolean existCase = caseRepository.existsById(caso.getIdCase());
-		if(!existCase) {
-			caseRepository.save(caso);
-		}else {
-			System.out.println("El caso ya existe!");
-		}
+//		boolean existCase = caseRepository.existsById(caso.getIdCase());
+//		if(!existCase) {
+//			caseRepository.save(caso);
+//		}else {
+//			System.out.println("El caso ya existe!");
+//		}
 	}
 
 	@Override
