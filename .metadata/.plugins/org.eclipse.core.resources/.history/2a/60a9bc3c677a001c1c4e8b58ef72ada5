@@ -1,0 +1,10 @@
+package com.developers.service.impls;
+
+import org.springframework.stereotype.Service;
+
+import com.developers.service.iface.ICrimeService;
+
+@Service
+public class CrimeServiceImpl implements ICrimeService {
+
+}

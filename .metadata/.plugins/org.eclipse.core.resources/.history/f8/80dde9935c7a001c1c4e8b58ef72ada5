@@ -1,0 +1,13 @@
+package com.developers.config;
+
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * Configuracion de Swagger
+ * @author Lady
+ */
+
+@Configuration
+public class SwaggerConfig {
+
+}
