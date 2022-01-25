@@ -1,10 +1,11 @@
 package com.developers.dto;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+//@Builder
+@NoArgsConstructor
 public class CrimeDTO {
 
 	private Long id;

@@ -1,0 +1,15 @@
+package com.developers.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.developers.model.Crime;
+
+import io.swagger.annotations.Api;
+
+@RestController
+@RequestMapping("/crimes")
+@Api(value = "/crimes", tags = {Crime})
+public class CrimeController {
+
+}
