@@ -1,0 +1,5 @@
+package com.developers.config;
+
+public class RestExceptionHandler {
+
+}

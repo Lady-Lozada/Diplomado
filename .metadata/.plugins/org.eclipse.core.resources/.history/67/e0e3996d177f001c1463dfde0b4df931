@@ -1,0 +1,5 @@
+package com.developers.util;
+
+public interface ConstantesUtil {
+
+}
