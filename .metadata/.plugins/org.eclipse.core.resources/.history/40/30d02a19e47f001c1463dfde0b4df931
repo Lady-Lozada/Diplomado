@@ -1,0 +1,11 @@
+package com.developers.service.iface;
+
+import java.util.List;
+
+import com.developers.dto.UserDTO;
+import com.developers.exception.RestException;
+
+public interface IUserService {
+
+	public List<UserDTO> listUsers() throws RestException;
+}

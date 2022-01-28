@@ -8,7 +8,4 @@ import com.developers.model.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
-	public User findByFirstNameAndLastName(String name, String lastName);
-	
-	public User findByUserName(String userName);
 }

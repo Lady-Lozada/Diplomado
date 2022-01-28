@@ -1,0 +1,10 @@
+package com.developers.service.iface;
+
+import java.util.List;
+
+import com.developers.dto.UserDTO;
+
+public interface IUserService {
+
+	public List<UserDTO> listUsers();
+}

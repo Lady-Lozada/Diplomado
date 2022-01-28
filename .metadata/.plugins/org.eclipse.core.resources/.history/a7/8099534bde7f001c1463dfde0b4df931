@@ -9,6 +9,4 @@ import com.developers.model.User;
 public interface UserRepository extends CrudRepository<User, Long> {
 
 	public User findByFirstNameAndLastName(String name, String lastName);
-	
-	public User findByUserName(String userName);
 }
