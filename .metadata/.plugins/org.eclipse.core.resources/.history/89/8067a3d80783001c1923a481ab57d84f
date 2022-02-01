@@ -1,0 +1,17 @@
+package com.developers.util;
+
+import com.developers.dto.UserDTO;
+import com.developers.model.User;
+
+public interface mapingHelper {
+
+	public static UserDTO getMapValuesClient(User user) {
+		UserDTO uDTO = new UserDTO();
+		uDTO.setId(user.getIdUser());
+		uDTO.setNombre(user.getFirstName());
+		uDTO.setApellido(user.getLastName());
+		uDTO.setFechaNacimiento(user.getDateBirth());
+		uDTO.setImage(user.getImageUser());
+		return uDTO;
+	}
+}

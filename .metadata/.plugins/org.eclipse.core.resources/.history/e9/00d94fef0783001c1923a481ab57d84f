@@ -1,0 +1,21 @@
+package com.developers.util;
+
+import java.util.List;
+
+import com.developers.dto.UserDTO;
+import com.developers.model.User;
+
+public interface mapingHelper {
+
+	public static UserDTO getMapValuesClient(User user) {
+		UserDTO uDTO = new UserDTO();
+		uDTO.setId(user.getIdUser());
+		uDTO.setNombre(user.getFirstName());
+		uDTO.setApellido(user.getLastName());
+		uDTO.setFechaNacimiento(user.getDateBirth());
+		uDTO.setImage(user.getImageUser());
+		
+		List<String> rolsDTO = user.getRoles().stream().map(r -> r.getNameRole());
+		return uDTO;
+	}
+}

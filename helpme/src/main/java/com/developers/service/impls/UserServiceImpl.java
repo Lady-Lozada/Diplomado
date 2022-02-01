@@ -2,16 +2,21 @@ package com.developers.service.impls;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.developers.dto.UserDTO;
+import com.developers.exception.ErrorDto;
+import com.developers.exception.NotFoundException;
 import com.developers.exception.RestException;
 import com.developers.model.User;
 import com.developers.repository.UserRepository;
 import com.developers.service.iface.IUserService;
+import com.developers.util.ConstantesUtil;
 
 @Service
 public class UserServiceImpl implements IUserService{
@@ -42,8 +47,13 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	public User listUser(Long id) throws RestException {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<User> userBD = Optional.ofNullable(userRepo.findById(id).get());
+		if(!userBD.isPresent()) {
+			throw new NotFoundException(ErrorDto.getErrorDto(HttpStatus.NOT_FOUND.getReasonPhrase(), 
+															 ConstantesUtil.MESSAGE_NOT_FOUND, 
+															 HttpStatus.NOT_FOUND.value()));
+		}
+		return userRepo.findById(id).get();
 	}
 
 	@Override

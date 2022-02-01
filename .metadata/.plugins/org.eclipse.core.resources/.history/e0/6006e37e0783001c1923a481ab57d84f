@@ -1,0 +1,10 @@
+package com.developers.util;
+
+import com.developers.dto.UserDTO;
+
+public interface mapingHelper {
+
+	public static UserDTO getMapValuesClient(User user) {
+		
+	}
+}
