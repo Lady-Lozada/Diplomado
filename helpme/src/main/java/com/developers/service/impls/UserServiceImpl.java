@@ -2,6 +2,7 @@ package com.developers.service.impls;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -10,9 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.developers.dto.UserDTO;
+import com.developers.exception.BadRequestException;
 import com.developers.exception.ErrorDto;
 import com.developers.exception.NotFoundException;
 import com.developers.exception.RestException;
+import com.developers.model.Role;
 import com.developers.model.User;
 import com.developers.repository.UserRepository;
 import com.developers.service.iface.IUserService;
@@ -58,8 +61,21 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	public User saveUser(User usuario) throws RestException {
-		// TODO Auto-generated method stub
-		return null;
+		if(Objects.isNull(usuario)) {
+			throw new BadRequestException(ErrorDto.getErrorDto(HttpStatus.BAD_REQUEST.getReasonPhrase(), 
+																		 ConstantesUtil.MESSAGE_BAD_REQUEST, 
+																		 HttpStatus.BAD_REQUEST.value()));
+		}
+		boolean exist = userRepo.existsById(usuario.getIdUser());
+		if(exist) {
+			userRepo.save(usuario);
+		}
+		List<Role> roles = new ArrayList<>();
+		Role rol = new Role();
+		rol.setIdRole(2L);
+		roles.add(rol);
+		usuario.setRoles(roles);
+		return userRepo.save(usuario);
 	}
 
 	@Override

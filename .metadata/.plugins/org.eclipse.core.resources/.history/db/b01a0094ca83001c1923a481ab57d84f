@@ -1,0 +1,5 @@
+package com.developers.service.iface;
+
+public interface IEmailService {
+
+}

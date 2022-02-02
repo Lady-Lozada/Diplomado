@@ -1,0 +1,6 @@
+package com.developers.service.impls;
+
+@Service
+public class EmailServiceImpl {
+
+}
