@@ -1,8 +1,0 @@
-package com.developers.config;
-/**
- * Configuracion de Swagger
- * @author Lady
- */
-public class SwaggerConfig {
-
-}
