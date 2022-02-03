@@ -66,9 +66,13 @@ public class UserServiceImpl implements IUserService{
 																		 ConstantesUtil.MESSAGE_BAD_REQUEST, 
 																		 HttpStatus.BAD_REQUEST.value()));
 		}
-		boolean exist = userRepo.existsById(usuario.getIdUser());
-		if(exist) {
-			userRepo.save(usuario);
+		User usuarioDb = userRepo.findByUserName(usuario.getUserName());
+		if(Objects.nonNull(usuarioDb)) {
+			throw new BadRequestException(ErrorDto.getErrorDto(
+					HttpStatus.BAD_REQUEST.getReasonPhrase(), 
+					"Usuario ya existe",
+					HttpStatus.BAD_REQUEST.value())
+					);
 		}
 		List<Role> roles = new ArrayList<>();
 		Role rol = new Role();

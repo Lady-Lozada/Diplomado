@@ -21,7 +21,7 @@ public class UserDTO {
 	
 	private Boolean enabled;
 	
-	private Blob image;
+	private String image;
 	
 	private List<String> roles;
 }

@@ -55,7 +55,7 @@ public class User {
 	private Boolean socialNetwork;
 	
 	@Column(name = "image")
-	private Blob imageUser;
+	private String imageUser;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "roles_usuarios", 
