@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.developers.dto.UserDTO;
 import com.developers.exception.BadRequestException;
@@ -26,6 +27,7 @@ public class UserServiceImpl implements IUserService{
 
 	@Autowired private UserRepository userRepo;
 	
+	@Transactional(readOnly = true)
 	@Override
 	public List<UserDTO> listUsers() throws RestException {
 		List<User> usersDB = (List<User>) userRepo.findAll();
@@ -48,6 +50,7 @@ public class UserServiceImpl implements IUserService{
 		return listUsers;
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public User listUser(Long id) throws RestException {
 		Optional<User> userBD = Optional.ofNullable(userRepo.findById(id).get());
@@ -82,10 +85,33 @@ public class UserServiceImpl implements IUserService{
 		return userRepo.save(usuario);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
-	public User listByUsername() throws RestException {
-		// TODO Auto-generated method stub
-		return null;
+	public User listByUsername(String userName) throws RestException {
+		return userRepo.findByUserName(userName);
 	}
+
+	@Override
+	public User saveUserImage(User usuario) throws RestException {
+		if(Objects.isNull(usuario)) {
+			throw new BadRequestException(ErrorDto.getErrorDto(HttpStatus.BAD_REQUEST.getReasonPhrase(), 
+																		 ConstantesUtil.MESSAGE_BAD_REQUEST, 
+																		 HttpStatus.BAD_REQUEST.value()));
+		}
+		return userRepo.save(usuario);
+	}
+
+//	@Transactional
+//	@Override
+//	public Usuario updateUser(Usuario usuario) throws RestException {
+//		if(Objects.isNull(usuario)) {
+//			throw new BadRequestException(ErrorDto.getErrorDto(
+//					HttpStatus.BAD_REQUEST.getReasonPhrase(), 
+//					"Mala petición", //TODO: CREAR CONSTANTE EN CONSUTIL
+//					HttpStatus.BAD_REQUEST.value())
+//				);
+//		}
+//		return usuarioRepository.save(usuario);
+//	}
 
 }

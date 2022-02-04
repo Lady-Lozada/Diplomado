@@ -16,5 +16,7 @@ public interface IUserService {
 	
 	public User saveUser(User usuario) throws RestException;
 	
-	public User listByUsername() throws RestException;
+	User listByUsername(String userName) throws RestException;
+
+	User saveUserImage(User usuario) throws RestException;
 }

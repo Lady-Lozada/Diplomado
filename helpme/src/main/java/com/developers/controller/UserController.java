@@ -1,9 +1,18 @@
 package com.developers.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,8 +22,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.developers.dto.CrimeDTO;
 import com.developers.dto.UserDTO;
@@ -77,5 +88,37 @@ public class UserController {
 
 		UserDTO usuarios = MappingHelper.getMapValuesClient(userSaved);
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarios);		
+	}
+	
+//	@ApiOperation(value = "Actualiza la foto del usuario en la app", response = UserDTO.class, responseContainer = "List",
+//			produces = "application/json", httpMethod = "POST")
+	@PostMapping("/upload/{email}")
+	public ResponseEntity<?> upload(@RequestParam("image") MultipartFile image, @PathVariable String email) throws RestException{
+		Map<String, Object> response = new HashMap<>();
+		User usuario = userService.listByUsername(email);
+		if(!image.isEmpty()) {
+			String nameImage = UUID.randomUUID().toString()
+					.concat("_")
+					.concat(image.getOriginalFilename().replace(" ", ""));
+			Path path = Paths.get("uploads").resolve(nameImage).toAbsolutePath();
+			try {
+				Files.copy(image.getInputStream(), path);
+			} catch (IOException e) {
+				response.put("Error IO: ", e.getMessage().concat(e.getCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			String imageDB = usuario.getImageUser();
+			if(Objects.nonNull(imageDB) && imageDB.length() > 0 && !imageDB.startsWith("http")) {
+				Path pathBefore = Paths.get("uploads").resolve(imageDB).toAbsolutePath();
+				File imageFileBefore = pathBefore.toFile();
+				if(imageFileBefore.exists() && imageFileBefore.canRead()) {
+					imageFileBefore.delete();
+				}
+			}
+			usuario.setImageUser(nameImage);
+			userService.saveUserImage(usuario);
+			response.put("Usuario", usuario);
+		}
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 }
