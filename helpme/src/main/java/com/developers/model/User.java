@@ -1,6 +1,5 @@
 package com.developers.model;
 
-import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.List;
 

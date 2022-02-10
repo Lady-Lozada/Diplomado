@@ -1,0 +1,64 @@
+package com.developers.service.impls;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.developers.dto.CaseDTO;
+import com.developers.exception.RestException;
+import com.developers.model.Case;
+import com.developers.repository.CaseRepository;
+import com.developers.service.iface.ICaseService;
+
+@Service
+public class CaseServiceImpls implements ICaseService {
+
+	@Autowired
+	private CaseRepository caseRepo;
+	
+	@Override
+	public void save(Case caso) throws RestException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<CaseDTO> findAll() throws RestException {
+		List<Case> cases = (List<Case>) caseRepo.findAll();
+		List<CaseDTO> casesDTO = new ArrayList<>();
+		cases.stream().forEach(c -> {
+			CaseDTO casoDTO = new CaseDTO();
+			casoDTO.setIdCase(c.getIdCase());
+			casoDTO.setDateHour(c.getDateHour());
+			casoDTO.setAltitud(c.getAltitud());
+			casoDTO.setLatitud(c.getLatitud());
+			casoDTO.setLongitud(c.getLongitud());
+			casoDTO.setVisible(c.getVisible());
+			casoDTO.setDescriptionCase(c.getDescriptionCase());
+			casoDTO.setUrlMap(c.getUrlMap());
+			casoDTO.setRmiMap(c.getRmiMap());
+			casoDTO.setUsuarioId(c.getUsuario().getIdUser());
+			casoDTO.setImage(c.getUsuario().getImageUser());
+			casoDTO.setNameUser(c.getUsuario().getFirstName());
+			casoDTO.setLastNameUser(c.getUsuario().getLastName());
+			casesDTO.add(casoDTO);
+		});
+		return casesDTO;
+	}
+
+	@Override
+	public Boolean visible(Boolean visible, Long id) throws RestException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Case findById(Long id) throws RestException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

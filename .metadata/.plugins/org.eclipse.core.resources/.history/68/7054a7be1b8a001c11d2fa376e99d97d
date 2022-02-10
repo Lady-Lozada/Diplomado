@@ -1,0 +1,18 @@
+package com.developers.service.iface;
+
+import java.util.List;
+
+import com.developers.dto.CaseDTO;
+import com.developers.exception.RestException;
+import com.developers.model.Case;
+
+public interface ICaseService {
+	
+	public void save(Case caso) throws RestException;
+	
+	public void updateCase(Case caso, int caseId);
+	
+	public void deleteCase(int caseId);
+	
+	public List<CaseDTO> findAll() throws RestException;
+}

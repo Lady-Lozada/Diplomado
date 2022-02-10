@@ -11,15 +11,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import javax.validation.Valid;
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,12 +25,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.developers.dto.CrimeDTO;
 import com.developers.dto.UserDTO;
+import com.developers.exception.ErrorDto;
+import com.developers.exception.NotFoundException;
 import com.developers.exception.RestException;
 import com.developers.model.User;
 import com.developers.service.iface.IEmailService;
 import com.developers.service.iface.IUserService;
+import com.developers.util.ConstantesUtil;
 import com.developers.util.MappingHelper;
 
 import io.swagger.annotations.Api;
@@ -90,8 +90,8 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarios);		
 	}
 	
-//	@ApiOperation(value = "Actualiza la foto del usuario en la app", response = UserDTO.class, responseContainer = "List",
-//			produces = "application/json", httpMethod = "POST")
+	@ApiOperation(value = "Actualiza la foto del usuario en la app", response = UserDTO.class, responseContainer = "List",
+			produces = "application/json", httpMethod = "POST")
 	@PostMapping("/upload/{email}")
 	public ResponseEntity<?> upload(@RequestParam("image") MultipartFile image, @PathVariable String email) throws RestException{
 		Map<String, Object> response = new HashMap<>();
@@ -120,5 +120,22 @@ public class UserController {
 			response.put("Usuario", usuario);
 		}
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+	
+	
+	@ApiOperation(value = "Actualiza un usuario en la app", response = User.class,
+			produces = "application/json", httpMethod = "PUT")
+	@PutMapping("/update/{userName}")
+	public ResponseEntity<User> update(@PathVariable String userName, @RequestBody User usuario ) throws RestException {
+		User usuarioDB = userService.listByUsername(userName);
+		if(Objects.isNull(usuarioDB)) {
+			throw new NotFoundException(ErrorDto.getErrorDto(HttpStatus.NOT_FOUND.getReasonPhrase(), 
+															 ConstantesUtil.MESSAGE_NOT_FOUND, HttpStatus.NOT_FOUND.value()));
+		}		
+		usuarioDB.setFirstName(usuario.getFirstName());
+		usuarioDB.setLastName(usuario.getLastName());
+		usuarioDB.setDateBirth(usuario.getDateBirth());
+		usuarioDB.setPassword(usuario.getPassword()); // TODO: implementar con Spring Security
+		return ResponseEntity.status(HttpStatus.CREATED).body(userService.updateUser(usuarioDB));
 	}
 }

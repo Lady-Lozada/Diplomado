@@ -101,6 +101,19 @@ public class UserServiceImpl implements IUserService{
 		return userRepo.save(usuario);
 	}
 
+	@Transactional
+	@Override
+	public User updateUser(User usuario) throws RestException {
+		if(Objects.isNull(usuario)) {
+			throw new BadRequestException(ErrorDto.getErrorDto(
+					HttpStatus.BAD_REQUEST.getReasonPhrase(), 
+					"Mala petición", //TODO: CREAR CONSTANTE EN CONSUTIL
+					HttpStatus.BAD_REQUEST.value())
+				);
+		}
+		return userRepo.save(usuario);
+	}
+
 //	@Transactional
 //	@Override
 //	public Usuario updateUser(Usuario usuario) throws RestException {

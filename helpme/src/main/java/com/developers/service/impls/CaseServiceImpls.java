@@ -5,44 +5,61 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.developers.dto.CaseDTO;
+import com.developers.exception.RestException;
 import com.developers.model.Case;
 import com.developers.repository.CaseRepository;
-import com.developers.service.iface.CaseService;
+import com.developers.service.iface.ICaseService;
 
 @Service
-public class CaseServiceImpls implements CaseService {
+public class CaseServiceImpls implements ICaseService {
 
 	@Autowired
-	private CaseRepository caseRepository;
+	private CaseRepository caseRepo;
 	
 	@Override
-	public void createCase(Case caso) {
-//		boolean existCase = caseRepository.existsById(caso.getIdCase());
-//		if(!existCase) {
-//			caseRepository.save(caso);
-//		}else {
-//			System.out.println("El caso ya existe!");
-//		}
+	@Transactional
+	public Case save(Case caso) throws RestException {
+		return caseRepo.save(caso);
 	}
 
 	@Override
-	public void updateCase(Case caso, int caseId) {
-		// TODO Auto-generated method stub
-		
+	@Transactional(readOnly = true)
+	public List<CaseDTO> findAll() throws RestException {
+		List<Case> cases = (List<Case>) caseRepo.findAll();
+		List<CaseDTO> casesDTO = new ArrayList<>();
+		cases.stream().forEach(c -> {
+			CaseDTO casoDTO = new CaseDTO();
+			casoDTO.setIdCase(c.getIdCase());
+			casoDTO.setDateHour(c.getDateHour());
+			casoDTO.setAltitud(c.getAltitud());
+			casoDTO.setLatitud(c.getLatitud());
+			casoDTO.setLongitud(c.getLongitud());
+			casoDTO.setVisible(c.getVisible());
+			casoDTO.setDescriptionCase(c.getDescriptionCase());
+			casoDTO.setUrlMap(c.getUrlMap());
+			casoDTO.setRmiMap(c.getRmiMap());
+			casoDTO.setUsuarioId(c.getUsuario().getIdUser());
+			casoDTO.setImage(c.getUsuario().getImageUser());
+			casoDTO.setNameUser(c.getUsuario().getFirstName());
+			casoDTO.setLastNameUser(c.getUsuario().getLastName());
+			casesDTO.add(casoDTO);
+		});
+		return casesDTO;
 	}
 
 	@Override
-	public void deleteCase(int caseId) {
-		// TODO Auto-generated method stub
-		
+	@Transactional
+	public Boolean visible(Boolean visible, Long id) throws RestException {
+		return caseRepo.setVisible(visible, id);
 	}
 
 	@Override
-	public List<Case> getAll() {
-		List<Case> casos = new ArrayList<>();
-		casos = (List<Case>) caseRepository.findAll();
-		return casos;
+	@Transactional(readOnly = true)
+	public Case findById(Long id) throws RestException {
+		return caseRepo.findById(id).get();
 	}
 
 	

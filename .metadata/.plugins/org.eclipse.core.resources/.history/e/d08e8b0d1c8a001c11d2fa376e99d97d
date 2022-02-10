@@ -1,0 +1,46 @@
+package com.developers.service.impls;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.developers.dto.CaseDTO;
+import com.developers.exception.RestException;
+import com.developers.model.Case;
+import com.developers.repository.CaseRepository;
+import com.developers.service.iface.ICaseService;
+
+@Service
+public class CaseServiceImpls implements ICaseService {
+
+	@Autowired
+	private CaseRepository caseRepository;
+	
+	@Override
+	public void save(Case caso) throws RestException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<CaseDTO> findAll() throws RestException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean visible(Boolean visible, Long id) throws RestException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Case findById(Long id) throws RestException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

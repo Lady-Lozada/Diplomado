@@ -1,7 +1,0 @@
-package com.developers.service.impls;
-
-import com.developers.service.iface.IUserService;
-
-public class UserServiceImpl implements IUserService{
-
-}
