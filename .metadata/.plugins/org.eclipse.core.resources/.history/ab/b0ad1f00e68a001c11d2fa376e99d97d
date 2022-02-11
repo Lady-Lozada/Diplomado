@@ -1,0 +1,8 @@
+package com.developers.auth;
+
+public class SpringSecurityConfig {
+
+	// Crear servidor de autorizacion
+	
+	
+}

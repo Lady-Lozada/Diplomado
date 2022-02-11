@@ -1,0 +1,9 @@
+package com.developers.auth;
+
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AuthorizationServerConfig {
+
+	// Crear servidor de autorizacion
+}

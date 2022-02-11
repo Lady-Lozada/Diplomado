@@ -1,0 +1,5 @@
+package com.developers.auth;
+
+public class AuthorizationServerConfig {
+
+}

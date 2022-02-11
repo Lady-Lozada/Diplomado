@@ -48,7 +48,8 @@ public class CaseController {
 			produces = "application/json", httpMethod = "POST")
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ResponseEntity<Case> create(@RequestBody Case caso){
-		return null;
+	public ResponseEntity<Case> create(@RequestBody Case caso) throws RestException{
+		Case caseSaved = caseService.save(caso);
+		return ResponseEntity.status(HttpStatus.CREATED).body(caseSaved);
 	}
 }

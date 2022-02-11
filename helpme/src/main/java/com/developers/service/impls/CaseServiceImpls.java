@@ -2,16 +2,21 @@ package com.developers.service.impls;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.developers.dto.CaseDTO;
+import com.developers.exception.BadRequestException;
+import com.developers.exception.ErrorDto;
 import com.developers.exception.RestException;
 import com.developers.model.Case;
 import com.developers.repository.CaseRepository;
 import com.developers.service.iface.ICaseService;
+import com.developers.util.ConstantesUtil;
 
 @Service
 public class CaseServiceImpls implements ICaseService {
@@ -22,6 +27,12 @@ public class CaseServiceImpls implements ICaseService {
 	@Override
 	@Transactional
 	public Case save(Case caso) throws RestException {
+		if(Objects.isNull(caso)) {
+			throw new BadRequestException(ErrorDto.getErrorDto(
+					 HttpStatus.BAD_REQUEST.getReasonPhrase(), 
+					 ConstantesUtil.MESSAGE_BAD_REQUEST, 
+					 HttpStatus.BAD_REQUEST.value()));
+		}
 		return caseRepo.save(caso);
 	}
 
