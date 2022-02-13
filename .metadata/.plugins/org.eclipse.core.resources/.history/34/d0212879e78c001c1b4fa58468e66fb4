@@ -21,8 +21,8 @@ logging.level.com.developers.service.impls=WARN
 #Email
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
-spring.mail.username=lady.lozada@est.iudigital.edu.co
-spring.mail.password=as9as9as9*
+spring.mail.username=
+spring.mail.password=
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.startls.enabled=true
 

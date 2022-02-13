@@ -68,7 +68,7 @@ public class CrimeController {
 	
 	@ApiOperation(value = "Guardar un delito",
 			produces = "application/json", httpMethod = "POST")
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void create(@PathVariable @Valid Long id) throws NotFoundException{
 		crimeService.delete(id);		
